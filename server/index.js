@@ -5,7 +5,7 @@ const mongodb = require('../database/index.js');
 
 //app.use(express.static(__dirname + '/../client/'));
 
-let port = 3000;
+let port = 3004;
 
 app.listen(port, function() {
   console.log(`Express listening on port [ ${port} ]`);
