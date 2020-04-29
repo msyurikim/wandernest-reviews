@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/wandernest');
+const dummy = require('./dummyData');
 
 // SCHEMA
 let reviewSchema = mongoose.Schema({
@@ -16,12 +17,12 @@ let reviewSchema = mongoose.Schema({
   ReviewDescription: String,
   ReviewDateOfStay: String,
 
-  ReviewRatingValue: Number,
-  ReviewRatingLocation: Number,
-  ReviewRatingService: Number,
-  ReviewRatingRooms: Number,
-  ReviewRatingCleanliness: Number,
-  ReviewRatingSleepQuality: Number,
+  //   ReviewRatingValue: Number,
+  //   ReviewRatingLocation: Number,
+  //   ReviewRatingService: Number,
+  //   ReviewRatingRooms: Number,
+  //   ReviewRatingCleanliness: Number,
+  //   ReviewRatingSleepQuality: Number,
 
 });
 

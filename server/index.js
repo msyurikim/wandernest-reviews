@@ -15,6 +15,11 @@ app.post('/', function (req, res) {
   console.log('post() /');
 });
 
+// ENDPOINT GENERATE DUMMY DATA
+app.post('/generate', function (req, res) {
+  console.log('post() /generate');
+});
+
 app.get('/', function (req, res) {
   console.log('get() /');
 });
