@@ -1,38 +1,18 @@
 var faker = require('faker');
 var mongoose = require('mongoose');
 
+var ReviewModel = require('./Models/ReviewModel.js');
+var QAModel = require('./Models/QAModel.js');
+var RoomTipModel = require('./Models/RoomTipModel.js');
+
 mongoose.connect('mongodb://localhost/wandernest');
-
-// SCHEMA
-let reviewSchema = mongoose.Schema({
-
-  Username: String,
-  UserPicture: String,
-  UserLocation: String,
-  UserContribution: Number,
-  UserHelpfulVotes: Number,
-
-  ReviewDate: String,
-  ReviewRating: Number,
-  ReviewTitle: String,
-  ReviewDescription: String,
-  ReviewDateOfStay: String,
-
-});
-
-// MODEL
-let Review = mongoose.model('Review', reviewSchema);
-
-// CONNECTION
-var db = mongoose.connection;
-
-// CONNECTION TEST
-db.once('open', function() { console.log('Connected'); });
 
 // 10 UNIQUE PER PAGE * 100 PAGES
 // https://wandernest-reviews.s3-us-west-1.amazonaws.com/avatars/00.jpg - 049.jpg
 
-var compiled = [];
+var compiledReviews = [];
+var compiledQA = [];
+var compiledRoomTips = [];
 
 // RANDOM PLACEHOLDER DATA
 var randomUsernames = [];
@@ -46,32 +26,30 @@ var imageURL = 'https://wandernest-reviews.s3-us-west-1.amazonaws.com/avatars/';
 
 let generateRandomDataArrays = () => {
 
-  for (var i = 0; i < 50; i++) { randomUsernames.push(faker.internet.userName()); } 
-  //console.log(randomUsernames); console.log(randomUsernames.length); 
+  for (var i = 0; i < 50; i++) {
+    randomUsernames.push(faker.internet.userName()); 
+    randomAvatars.push(imageURL + i + '.jpg');
+    randomLocations.push(faker.address.city());
+    randomReviewDates.push(faker.date.past().toLocaleString());
+    randomReviewTitles.push(faker.lorem.sentence());
+    randomReviewDescriptions.push(faker.lorem.paragraph());
+    randomReviewDateOfStays.push(faker.date.past().toLocaleString());
+  } 
 
-  for (var i = 0; i < 50; i++) { randomAvatars.push(imageURL + i + '.jpg'); }
-  //console.log(randomAvatars); console.log(randomAvatars.length);
-
-  for (var i = 0; i < 50; i++) { randomLocations.push(faker.address.city()); } 
+  // console.log(randomUsernames); console.log(randomUsernames.length); 
+  // console.log(randomAvatars); console.log(randomAvatars.length);
   // console.log(randomLocations); console.log(randomLocations.length);
-  
-  for (var i = 0; i < 50; i++) { randomReviewDates.push(faker.date.past().toLocaleString()); } 
   // console.log(randomReviewDates); console.log(randomReviewDates.length);
-
-  for (var i = 0; i < 50; i++) { randomReviewTitles.push(faker.lorem.sentence()); } 
-  //console.log(randomReviewTitles); console.log(randomReviewTitles.length);
-
-  for (var i = 0; i < 50; i++) { randomReviewDescriptions.push(faker.lorem.paragraph()); } 
+  // console.log(randomReviewTitles); console.log(randomReviewTitles.length);
   // console.log(randomReviewDescriptions); console.log(randomReviewDescriptions.length);
-
-  for (var i = 0; i < 50; i++) { randomReviewDateOfStays.push(faker.date.past().toLocaleString()); } 
   // console.log(randomReviewDateOfStays); console.log(randomReviewDateOfStays.length);
 
 };
 
 generateRandomDataArrays();
 
-let generateDummyData = () => {
+// GENERATE DATA FOR REVIEWS
+let generateDummyDataReviews = () => {
 
   var currentID = 0;
   var currentUsername = 0;
@@ -165,19 +143,19 @@ let generateDummyData = () => {
     if (currentReviewDateOfStay === 50) { currentReviewDateOfStay = 0; }  
     //////////////////////////////////
 
-    compiled.push(baseObject);
+    compiledReviews.push(baseObject);
 
   }
 
-  // console.log(compiled);
-  // console.log(compiled[0]);
-  // console.log(compiled.length);
+  // console.log(compiledReviews);
+  // console.log(compiledReviews[0]);
+  // console.log(compiledReviews.length);
 
-  ////////////////////////////////// TO MONGO
+  ////////////////////////////////// TO MONGO  
 
-  compiled.forEach((element) => {
+  compiledReviews.forEach((element) => {
 
-    Review.collection.bulkWrite(
+    ReviewModel.Review.collection.bulkWrite(
       [ 
         { insertOne: { 'document': element } }
       ],
@@ -189,6 +167,7 @@ let generateDummyData = () => {
     }).catch((err) => {
       console.log('BULK UPDATE ERROR');
     });
+
   });
 
   console.log('done');
@@ -197,4 +176,88 @@ let generateDummyData = () => {
 
 };
 
-generateDummyData();
+generateDummyDataReviews();
+
+// GENERATE DATA FOR Q & A
+let generateDummyDataQA = () => {
+
+  var currentID = 0;
+  var currentUsername = 0;
+  var currentAvatar = 0;
+  var currentLocation = 0;  
+  var currentReviewDate = 0;  
+  var currentReviewTitle = 0;
+  var currentReviewDescription = 0;
+  var currentReviewDateOfStay = 0;
+
+    
+  // MAKE 1000 ENTRIES
+  for (var i = 0; i < 1000; i++) {
+
+    //////////////////////////////////
+    var baseObject = {
+
+      ReviewID: 0,
+
+      QUsername: String,
+      QUserPicture: String,
+      QLocation: String,
+      QDate: String,
+      QDescription: String,
+      QNumContributions: Number,
+      QHelpfulVotes: Number,
+    
+      AUsername: String,
+      AUserPicture: String,
+      ADate: String,
+      ADescription: String,
+      AHelpfulVotes: Number,
+
+    };
+    //////////////////////////////////
+    
+    ////////////////////////////////// SET REVIEW ID
+    if (i % 10 === 0) { currentID++; }
+    //console.log(currentID);       
+    baseObject.ReviewID = currentID;    
+    //////////////////////////////////
+    
+    ////////////////////////////////// SET USERNAMES
+    baseObject.Username = randomUsernames[currentUsername];
+    currentUsername++;
+    if (currentUsername === 50) { currentUsername = 0; } 
+    //////////////////////////////////
+
+
+    compiledQA.push(baseObject);
+
+  }
+
+  // console.log(compiledQA);
+  // console.log(compiledQA[0]);
+  console.log(compiledQA.length);
+
+  ////////////////////////////////// TO MONGO  
+
+  compiledReviews.forEach((element) => {
+
+    ReviewModel.Review.collection.bulkWrite(
+      [ 
+        { insertOne: { 'document': element } }
+      ],
+      {
+        ordered: true,
+      }
+    ).then((result) => {
+      console.log('BULK UPDATE SUCCESS');
+    }).catch((err) => {
+      console.log('BULK UPDATE ERROR');
+    });
+
+  });
+
+  console.log('done');
+
+  //////////////////////////////////
+
+};
