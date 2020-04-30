@@ -13,6 +13,6 @@ let roomtipSchema = mongoose.Schema({
   
 });
 
-let RoomTip = mongoose.model('RoomTip', roomtipSchema, 'wandernest');
+let RoomTip = mongoose.model('RoomTip', roomtipSchema);
 
 module.exports.RoomTip = RoomTip;
