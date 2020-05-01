@@ -1,36 +1,31 @@
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/wandernest');
-const dummy = require('./dummyData');
 
-// SCHEMA
-let reviewSchema = mongoose.Schema({
+var ReviewModel = require('./Models/ReviewModel.js');
+var QAModel = require('./Models/QAModel.js');
+var RoomTipModel = require('./Models/RoomTipModel.js');
 
-  Username: String,
-  UserPicture: String,
-  UserLocation: String,
-  UserContribution: Number,
-  UserHelpfulVotes: Number,
+let retrieveReviewID = (id, callback) => {
 
-  ReviewDate: String,
-  ReviewRating: Number,
-  ReviewTitle: String,
-  ReviewDescription: String,
-  ReviewDateOfStay: String,
+  console.log('retrieveReviewID ' + id);
 
-  //   ReviewRatingValue: Number,
-  //   ReviewRatingLocation: Number,
-  //   ReviewRatingService: Number,
-  //   ReviewRatingRooms: Number,
-  //   ReviewRatingCleanliness: Number,
-  //   ReviewRatingSleepQuality: Number,
+  var myTempID = id;
 
-});
+  ReviewModel.Review.aggregate([
+    // aggregation
+    { $match: {ID: parseInt(myTempID) } },
+    { $limit: 10 },
+    { $sort: {ID: -1} }
+    
+  ])
+    .exec((error, results) => {
+      console.log('RESULTS =====');
+      console.log(results);
+      console.log('RESULTS =====');
+      callback(results);
 
-// MODEL
-let Review = mongoose.model('Review', reviewSchema);
+    });
 
-// CONNECTION
-var db = mongoose.connection;
+};
 
-// CONNECTION TEST
-db.once('open', function() { console.log('Connected'); });
+module.exports.retrieveReviewID = retrieveReviewID;

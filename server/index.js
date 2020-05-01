@@ -2,6 +2,7 @@ const express = require('express');
 let app = express();
 
 const mongodb = require('../database/index.js');
+const generateData = require('../database/dummyData.js');
 
 //app.use(express.static(__dirname + '/../client/'));
 
@@ -15,11 +16,28 @@ app.post('/', function (req, res) {
   console.log('post() /');
 });
 
+// get reviews
+app.get('/reviews', function (req, res) {
+  console.log('GET /reviews/');
+  console.log(req.query.id);
+
+  var handleResponse = (data) => { 
+    console.log('handleResponse() in app.get(/repos)');
+    console.log(data);
+    res.send(data);
+  };  
+
+  console.log(mongodb.retrieveReviewID(req.query.id, handleResponse));
+
+
+});
+
 // ENDPOINT GENERATE DUMMY DATA
 app.post('/generate', function (req, res) {
-  console.log('post() /generate');
+  console.log('POST /generate');
+  generateData.generateAllDataAndInsert();
 });
 
 app.get('/', function (req, res) {
-  console.log('get() /');
+  console.log('POST /');
 });

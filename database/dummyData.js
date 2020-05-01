@@ -46,8 +46,6 @@ let generateRandomDataArrays = () => {
 
 };
 
-generateRandomDataArrays();
-
 // GENERATE DATA FOR REVIEWS
 let generateDummyDataReviews = () => {
 
@@ -153,7 +151,6 @@ let generateDummyDataReviews = () => {
 
 };
 
-generateDummyDataReviews();
 
 // GENERATE DATA FOR Q & A
 let generateDummyDataQA = () => {
@@ -278,8 +275,6 @@ let generateDummyDataQA = () => {
   console.log(compiledQA.length);
 };
 
-generateDummyDataQA();
-
 // GENERATE DATA FOR ROOM TIPS
 let generateDummyDataRoomTips = () => {
 
@@ -368,8 +363,6 @@ let generateDummyDataRoomTips = () => {
   console.log(compiledRoomTips.length);
 };
 
-generateDummyDataRoomTips();
-
 // INSERT INTO MONGO
 let insertToMongo = () => {
 
@@ -426,5 +419,14 @@ let insertToMongo = () => {
 
 };
 
-insertToMongo();
-console.log('done');
+let generateAllDataAndInsert = () => {
+  console.log('generateAllDataAndInsert()');
+  generateRandomDataArrays();
+  generateDummyDataReviews();
+  generateDummyDataQA();
+  generateDummyDataRoomTips();
+  insertToMongo();
+  console.log('done');
+};
+
+module.exports.generateAllDataAndInsert = generateAllDataAndInsert;
