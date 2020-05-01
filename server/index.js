@@ -19,18 +19,46 @@ app.post('/', function (req, res) {
 // get reviews
 app.get('/reviews', function (req, res) {
   console.log('GET /reviews/');
-  console.log(req.query.id);
 
   var handleResponse = (data) => { 
     console.log('handleResponse() in app.get(/repos)');
-    console.log(data);
+    //console.log(data);
     res.send(data);
   };  
 
-  console.log(mongodb.retrieveReviewID(req.query.id, handleResponse));
-
+  mongodb.retrieveReviewsByID(req.query.id, handleResponse);
 
 });
+
+// get QA
+app.get('/qas', function (req, res) {
+  console.log('GET /reviews/');
+
+  var handleResponse = (data) => { 
+    console.log('handleResponse() in app.get(/qa)');
+    //console.log(data);
+    res.send(data);
+  };  
+
+  mongodb.retrieveQAByID(req.query.id, handleResponse);
+
+});
+
+// get RoomTips
+app.get('/roomtips', function (req, res) {
+  console.log('GET /reviews/');
+
+  var handleResponse = (data) => { 
+    console.log('handleResponse() in app.get(/roomtips)');
+    //console.log(data);
+    res.send(data);
+  };  
+
+  mongodb.retrieveRoomTipByID(req.query.id, handleResponse);
+
+});
+
+
 
 // ENDPOINT GENERATE DUMMY DATA
 app.post('/generate', function (req, res) {
