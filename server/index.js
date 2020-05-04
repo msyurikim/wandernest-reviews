@@ -4,7 +4,7 @@ let app = express();
 const mongodb = require('../database/index.js');
 const generateData = require('../database/dummyData.js');
 
-//app.use(express.static(__dirname + '/../client/'));
+app.use(express.static(__dirname + '/../client/dist'));
 
 let port = 3004;
 
@@ -28,7 +28,7 @@ app.get('/reviews', function (req, res) {
     } else {
       res.send(data);
     }
-    
+
   };  
 
   mongodb.retrieveReviewsByID(req.query.id, handleResponse);
