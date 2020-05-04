@@ -1,36 +1,89 @@
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/wandernest');
-const dummy = require('./dummyData');
 
-// SCHEMA
-let reviewSchema = mongoose.Schema({
+var ReviewModel = require('./Models/ReviewModel.js');
+var QAModel = require('./Models/QAModel.js');
+var RoomTipModel = require('./Models/RoomTipModel.js');
 
-  Username: String,
-  UserPicture: String,
-  UserLocation: String,
-  UserContribution: Number,
-  UserHelpfulVotes: Number,
+let retrieveReviewsByID = (id, callback) => {
 
-  ReviewDate: String,
-  ReviewRating: Number,
-  ReviewTitle: String,
-  ReviewDescription: String,
-  ReviewDateOfStay: String,
+  console.log('retrieveReviewID ' + id);
 
-  //   ReviewRatingValue: Number,
-  //   ReviewRatingLocation: Number,
-  //   ReviewRatingService: Number,
-  //   ReviewRatingRooms: Number,
-  //   ReviewRatingCleanliness: Number,
-  //   ReviewRatingSleepQuality: Number,
+  var myTempID = id;
 
-});
+  ReviewModel.Review.aggregate([
+    // aggregation
+    { $match: {ID: parseInt(myTempID) } },
+    { $limit: 10 },
+    { $sort: {ID: -1} }
+    
+  ])
+    .exec((error, results) => {
 
-// MODEL
-let Review = mongoose.model('Review', reviewSchema);
+      if (error) {
+        console.log('error in retrieveReviewsById()');
+        callback(error, results);
+      } else {
+        callback(null, results);
+      }
+      
 
-// CONNECTION
-var db = mongoose.connection;
+    });
 
-// CONNECTION TEST
-db.once('open', function() { console.log('Connected'); });
+};
+
+let retrieveQAByID = (id, callback) => {
+
+  console.log('retrieveReviewID ' + id);
+
+  var myTempID = id;
+
+  QAModel.QA.aggregate([
+    // aggregation
+    { $match: {ID: parseInt(myTempID) } },
+    { $limit: 10 },
+    { $sort: {ID: -1} }
+    
+  ])
+    .exec((error, results) => {
+
+      if (error) {
+        console.log('error in retrieveQAByID()');
+        callback(error, results);
+      } else {
+        callback(null, results);
+      }
+
+    });
+
+};
+
+let retrieveRoomTipByID = (id, callback) => {
+
+  console.log('retrieveReviewID ' + id);
+
+  var myTempID = id;
+
+  RoomTipModel.RoomTip.aggregate([
+    // aggregation
+    { $match: {ID: parseInt(myTempID) } },
+    { $limit: 10 },
+    { $sort: {ID: -1} }
+    
+  ])
+    .exec((error, results) => {
+
+      if (error) {
+        console.log('error in retrieveRoomTipByID()');
+        callback(error, results);
+      } else {
+        callback(null, results);
+      }
+
+    });
+
+};
+
+module.exports.retrieveReviewsByID = retrieveReviewsByID;
+module.exports.retrieveQAByID = retrieveQAByID;
+module.exports.retrieveRoomTipByID = retrieveRoomTipByID;
