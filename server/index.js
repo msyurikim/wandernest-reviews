@@ -20,10 +20,15 @@ app.post('/', function (req, res) {
 app.get('/reviews', function (req, res) {
   console.log('GET /reviews/');
 
-  var handleResponse = (data) => { 
+  var handleResponse = (error, data) => { 
     console.log('handleResponse() in app.get(/repos)');
     //console.log(data);
-    res.send(data);
+    if (error) {
+      res.sendStatus(404);
+    } else {
+      res.send(data);
+    }
+    
   };  
 
   mongodb.retrieveReviewsByID(req.query.id, handleResponse);
@@ -34,10 +39,16 @@ app.get('/reviews', function (req, res) {
 app.get('/qas', function (req, res) {
   console.log('GET /reviews/');
 
-  var handleResponse = (data) => { 
+  var handleResponse = (error, data) => { 
     console.log('handleResponse() in app.get(/qa)');
     //console.log(data);
-    res.send(data);
+
+    if (error) {
+      res.sendStatus(404);
+    } else {
+      res.send(data);
+    }
+
   };  
 
   mongodb.retrieveQAByID(req.query.id, handleResponse);
@@ -48,17 +59,21 @@ app.get('/qas', function (req, res) {
 app.get('/roomtips', function (req, res) {
   console.log('GET /reviews/');
 
-  var handleResponse = (data) => { 
+  var handleResponse = (error, data) => { 
     console.log('handleResponse() in app.get(/roomtips)');
     //console.log(data);
-    res.send(data);
+
+    if (error) {
+      res.sendStatus(404);
+    } else {
+      res.send(data);
+    }
+    
   };  
 
   mongodb.retrieveRoomTipByID(req.query.id, handleResponse);
 
 });
-
-
 
 // ENDPOINT GENERATE DUMMY DATA
 app.post('/generate', function (req, res) {

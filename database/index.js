@@ -20,7 +20,13 @@ let retrieveReviewsByID = (id, callback) => {
   ])
     .exec((error, results) => {
 
-      callback(results);
+      if (error) {
+        console.log('error in retrieveReviewsById()');
+        callback(error, results);
+      } else {
+        callback(null, results);
+      }
+      
 
     });
 
@@ -41,7 +47,12 @@ let retrieveQAByID = (id, callback) => {
   ])
     .exec((error, results) => {
 
-      callback(results);
+      if (error) {
+        console.log('error in retrieveQAByID()');
+        callback(error, results);
+      } else {
+        callback(null, results);
+      }
 
     });
 
@@ -62,7 +73,12 @@ let retrieveRoomTipByID = (id, callback) => {
   ])
     .exec((error, results) => {
 
-      callback(results);
+      if (error) {
+        console.log('error in retrieveRoomTipByID()');
+        callback(error, results);
+      } else {
+        callback(null, results);
+      }
 
     });
 
