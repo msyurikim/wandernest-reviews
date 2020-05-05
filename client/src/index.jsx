@@ -10,23 +10,36 @@ import RoomTipsList from './components/RoomTipsList.jsx';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
+    this.state = {      
+      currentID: 0,
       reviewData: [],
       qaData: [],
-      roomTipData: [],
+      roomTipData: [],      
     };
   }
 
   componentDidMount() {
-    console.log('componentDidMount()');
-    this.getReviewData();
-    this.getQAData();
-    this.getRoomTipData();
+    console.log('componentDidMount()');    
+    this.getCurrentURL();
+  }
+
+  getCurrentURL() {
+    console.log('getCurrentURL()');
+    var url = new URL(window.location.href);
+    var getID = url.searchParams.get('id');
+
+    this.setState({currentID: getID}, () => {
+      //console.log(this.state.currentID); 
+      this.getReviewData();
+      this.getQAData();
+      this.getRoomTipData();
+    });
+    
   }
 
   getReviewData (reviewID) {
 
-    reviewID = 1;
+    reviewID = this.state.currentID;
 
     $.ajax({
       type: 'GET',
@@ -44,7 +57,7 @@ class App extends React.Component {
 
   getQAData (qaID) {
 
-    qaID = 1;
+    qaID = this.state.currentID;
 
     $.ajax({
       type: 'GET',
@@ -62,7 +75,7 @@ class App extends React.Component {
 
   getRoomTipData (roomtipID) {
 
-    roomtipID = 1;
+    roomtipID = this.state.currentID;
 
     $.ajax({
       type: 'GET',
