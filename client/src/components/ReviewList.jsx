@@ -1,5 +1,5 @@
 import React from 'react';
-import SingleQA from './SingleQA.jsx';
+import SingleReview from './SingleReview.jsx';
 
 var ReviewList = (props) => (
 
@@ -9,7 +9,7 @@ var ReviewList = (props) => (
     </div>
 
     <div>
-      <SingleQA />
+      <SingleReview />
     </div>
   </div>
 
