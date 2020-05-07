@@ -218,7 +218,7 @@ let generateDummyDataQA = () => {
     //////////////////////////////////
 
     ////////////////////////////////// SET QDate
-    baseObject.QLocation = randomReviewDates[currentReviewDate];
+    baseObject.QDate = randomReviewDates[currentReviewDate];
     currentReviewDate++;
     if (currentReviewDate === 50) { currentReviewDate = 0; } 
     //////////////////////////////////

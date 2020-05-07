@@ -3,7 +3,8 @@ import React from 'react';
 var SingleRoomTip = (props) => (
 
   <div>
-    <p>SingleRoomTip.jsx</p>
+    <p>{props.data.Username} wrote a tip {props.data.TipDate}</p>
+    <p>{props.data.TipDescription}</p>
   </div>
 
 );

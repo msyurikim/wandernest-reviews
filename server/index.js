@@ -81,13 +81,4 @@ app.post('/generate', function (req, res) {
   generateData.generateAllDataAndInsert();
 });
 
-app.get('/', function (req, res) {
-  console.log('POST /');
-});
-
-// TESTING
-const getData = () => {
-
-};
-
 module.exports = app;

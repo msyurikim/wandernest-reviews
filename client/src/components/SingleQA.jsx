@@ -3,7 +3,7 @@ import React from 'react';
 var SingleQA = (props) => (
 
   <div>
-    <p>SingleQA.jsx</p>
+    <p>{props.data.QUsername} asked a question {props.data.QDate}</p>
   </div>
 
 );

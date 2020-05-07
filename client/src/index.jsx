@@ -1,12 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
+
 import styled from 'styled-components';
 
 import FilterHead from './components/FilterHead.jsx';
 import ReviewList from './components/ReviewList.jsx';
 import QAList from './components/QAList.jsx';
 import RoomTipsList from './components/RoomTipsList.jsx';
+
+// STYLED COMPONENTS 
+const Wrapper = styled.div`
+  display: flex;
+  text-align: center;
+`;
+
+const Block = styled.div`
+  width: 270px;
+  height: 102px;
+  background: gray;
+`;
 
 class App extends React.Component {
   constructor(props) {
@@ -16,10 +29,33 @@ class App extends React.Component {
       reviewData: [],
       qaData: [],
       roomTipData: [],
+      showReviews: true,
+      showQA: false,
+      showRoomTips: false,
     };
   }
   
   // FUNCTIONALITY
+  toggleDisplay(name) {
+    console.log('toggleDisplay()');
+    
+    switch (name) {
+    case 'reviews':
+      this.setState({ showReviews: true, showQA: false, showRoomTips: false, });
+      break;
+
+    case 'qas':
+      this.setState({ showReviews: false, showQA: true, showRoomTips: false, });
+      break;
+
+    case 'roomtips':
+      this.setState({ showReviews: false, showQA: false, showRoomTips: true, });
+      break;
+
+    default:
+      null;
+    }
+  }
 
   componentDidMount() {
     console.log('componentDidMount()');
@@ -94,32 +130,25 @@ class App extends React.Component {
 
   }
 
-  // STYLED COMPONENTS
+  render () {    
 
-  render () {
+    const { showReviews, showQA, showRoomTips } = this.state;
 
-    const MyStyledComponent = styled.div`
-    padding: 4em;
-    background: red;
-    `;
-    
+    let current;
+
+    if (showReviews) { current = <ReviewList data={this.state.reviewData} />; }
+    if (showQA) { current = <QAList data={this.state.qaData} />; }
+    if (showRoomTips) { current = <RoomTipsList data={this.state.roomTipData} />; }
+
     return (
-      <div>
-        <FilterBlock>
-          <div>
-            <p>App - index.jsx</p>
-          </div>
-        </FilterBlock>
-        
+      <Wrapper>      
 
         <div>
-          <FilterHead />
-          <ReviewList />
-          <RoomTipsList />
-          <QAList />
-          
+          <FilterHead toggleDisplay={this.toggleDisplay.bind(this)} />
+          {current}
         </div>
-      </div>
+
+      </Wrapper>
     );
     
   }
