@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
+import styled from 'styled-components';
 
 import FilterHead from './components/FilterHead.jsx';
 import ReviewList from './components/ReviewList.jsx';
@@ -10,16 +11,18 @@ import RoomTipsList from './components/RoomTipsList.jsx';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {      
+    this.state = {
       currentID: 0,
       reviewData: [],
       qaData: [],
-      roomTipData: [],      
+      roomTipData: [],
     };
   }
+  
+  // FUNCTIONALITY
 
   componentDidMount() {
-    console.log('componentDidMount()');    
+    console.log('componentDidMount()');
     this.getCurrentURL();
   }
 
@@ -29,7 +32,7 @@ class App extends React.Component {
     var getID = url.searchParams.get('id');
 
     this.setState({currentID: getID}, () => {
-      //console.log(this.state.currentID); 
+      //console.log(this.state.currentID);
       this.getReviewData();
       this.getQAData();
       this.getRoomTipData();
@@ -91,13 +94,23 @@ class App extends React.Component {
 
   }
 
+  // STYLED COMPONENTS
+
   render () {
 
+    const MyStyledComponent = styled.div`
+    padding: 4em;
+    background: red;
+    `;
+    
     return (
       <div>
-        <div>
-          <p>App - index.jsx</p>
-        </div>
+        <FilterBlock>
+          <div>
+            <p>App - index.jsx</p>
+          </div>
+        </FilterBlock>
+        
 
         <div>
           <FilterHead />

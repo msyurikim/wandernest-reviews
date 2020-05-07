@@ -5,7 +5,7 @@ var ReviewModel = require('./Models/ReviewModel.js');
 var QAModel = require('./Models/QAModel.js');
 var RoomTipModel = require('./Models/RoomTipModel.js');
 
-mongoose.connect('mongodb://localhost/wandernest');
+mongoose.connect('mongodb://localhost/wandernest', { useNewUrlParser: true, useUnifiedTopology: true });
 
 // 10 UNIQUE PER PAGE * 100 PAGES
 // https://wandernest-reviews.s3-us-west-1.amazonaws.com/avatars/00.jpg - 049.jpg

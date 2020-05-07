@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/wandernest');
+mongoose.connect('mongodb://localhost/wandernest', { useNewUrlParser: true, useUnifiedTopology: true });
 
 var ReviewModel = require('./Models/ReviewModel.js');
 var QAModel = require('./Models/QAModel.js');
