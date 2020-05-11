@@ -18,7 +18,21 @@ const Wrapper = styled.div`
 const Block = styled.div`
   width: 270px;
   height: 102px;
-  background: gray;
+  background: white;
+`;
+
+const Background = styled.div`
+  width: 810px;
+  background: #f2f2f2;
+`;
+
+const PageNavigator = styled.div`
+  width: 810px;
+  height: 40px;
+  background: white;
+  margin-top: 20px;
+  margin-bottom: 20px
+  text-align: center;
 `;
 
 class App extends React.Component {
@@ -141,14 +155,17 @@ class App extends React.Component {
     if (showRoomTips) { current = <RoomTipsList data={this.state.roomTipData} />; }
 
     return (
-      <Wrapper>      
+      <Background>
+        <Wrapper>      
 
-        <div>
-          <FilterHead toggleDisplay={this.toggleDisplay.bind(this)} />
-          {current}
-        </div>
+          <div>
+            <FilterHead toggleDisplay={this.toggleDisplay.bind(this)} />
+            {current}
+          </div>
 
-      </Wrapper>
+        </Wrapper>
+        <PageNavigator>1 | 2 | 3</PageNavigator>
+      </Background>
     );
     
   }

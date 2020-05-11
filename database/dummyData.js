@@ -46,6 +46,16 @@ let generateRandomDataArrays = () => {
 
 };
 
+let clearArrays = () => {
+  randomUsernames = [];
+  randomAvatars = [];
+  randomLocations = [];
+  randomReviewDates = [];
+  randomReviewTitles = [];
+  randomReviewDescriptions = [];
+  randomReviewDateOfStays = [];
+};
+
 // GENERATE DATA FOR REVIEWS
 let generateDummyDataReviews = () => {
 
@@ -94,9 +104,10 @@ let generateDummyDataReviews = () => {
     //////////////////////////////////
 
     ////////////////////////////////// SET USERPICTURES
-    baseObject.UserPicture = randomAvatars[currentAvatar];
-    currentAvatar++;
-    if (currentAvatar === 50) { currentAvatar = 0; }  
+    var ranNum = Math.floor(Math.random() * 50);
+    baseObject.UserPicture = randomAvatars[ranNum];
+    // currentAvatar++;
+    // if (currentAvatar === 50) { currentAvatar = 0; }  
     //////////////////////////////////
 
     ////////////////////////////////// SET USERLOCATIONS
@@ -206,12 +217,13 @@ let generateDummyDataQA = () => {
     //////////////////////////////////
 
     ////////////////////////////////// SET QUserPicture
-    baseObject.QUserPicture = randomAvatars[currentAvatar];
-    currentAvatar++;
-    if (currentAvatar === 50) { currentAvatar = 0; } 
+    var ranNum = Math.floor(Math.random() * 50);
+    baseObject.QUserPicture = randomAvatars[ranNum];
+    //currentAvatar++;
+    //if (currentAvatar === 50) { currentAvatar = 0; } 
     //////////////////////////////////
 
-    ////////////////////////////////// SET QUserPicture
+    ////////////////////////////////// SET QUserLocation
     baseObject.QLocation = randomLocations[currentLocation];
     currentLocation++;
     if (currentLocation === 50) { currentLocation = 0; } 
@@ -245,9 +257,10 @@ let generateDummyDataQA = () => {
     //////////////////////////////////
 
     ////////////////////////////////// SET AUserPicture
-    baseObject.AUserPicture = randomAvatars[currentAAvatar];
-    currentAAvatar--;
-    if (currentAAvatar === 0) { currentAAvatar = 50; } 
+    var ranNum = Math.floor(Math.random() * 50);
+    baseObject.AUserPicture = randomAvatars[ranNum];
+    // currentAAvatar--;
+    // if (currentAAvatar === 0) { currentAAvatar = 50; } 
     //////////////////////////////////
     
     ////////////////////////////////// SET ADate
@@ -319,9 +332,10 @@ let generateDummyDataRoomTips = () => {
     //////////////////////////////////
 
     ////////////////////////////////// SET UserPicture
-    baseObject.UserPicture = randomAvatars[currentAvatar];
-    currentAvatar++;
-    if (currentAvatar === 50) { currentAvatar = 0; } 
+    var ranNum = Math.floor(Math.random() * 50);
+    baseObject.UserPicture = randomAvatars[ranNum];
+    // currentAvatar++;
+    // if (currentAvatar === 50) { currentAvatar = 0; } 
     //////////////////////////////////
 
     ////////////////////////////////// SET UserLocation
@@ -421,9 +435,13 @@ let insertToMongo = () => {
 
 let generateAllDataAndInsert = () => {
   console.log('generateAllDataAndInsert()');
-  generateRandomDataArrays();
+  generateRandomDataArrays();// new data
   generateDummyDataReviews();
+  clearArrays();
+  generateRandomDataArrays();// new data
   generateDummyDataQA();
+  clearArrays();
+  generateRandomDataArrays();// new data
   generateDummyDataRoomTips();
   insertToMongo();
   console.log('done');
