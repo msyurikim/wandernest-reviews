@@ -5,7 +5,7 @@ var ReviewModel = require('./Models/ReviewModel.js');
 var QAModel = require('./Models/QAModel.js');
 var RoomTipModel = require('./Models/RoomTipModel.js');
 
-mongoose.connect('mongodb://localhost/wandernest');
+mongoose.connect('mongodb://localhost/wandernest', { useNewUrlParser: true, useUnifiedTopology: true });
 
 // 10 UNIQUE PER PAGE * 100 PAGES
 // https://wandernest-reviews.s3-us-west-1.amazonaws.com/avatars/00.jpg - 049.jpg
@@ -44,6 +44,16 @@ let generateRandomDataArrays = () => {
   // console.log(randomReviewDescriptions); console.log(randomReviewDescriptions.length);
   // console.log(randomReviewDateOfStays); console.log(randomReviewDateOfStays.length);
 
+};
+
+let clearArrays = () => {
+  randomUsernames = [];
+  randomAvatars = [];
+  randomLocations = [];
+  randomReviewDates = [];
+  randomReviewTitles = [];
+  randomReviewDescriptions = [];
+  randomReviewDateOfStays = [];
 };
 
 // GENERATE DATA FOR REVIEWS
@@ -94,9 +104,10 @@ let generateDummyDataReviews = () => {
     //////////////////////////////////
 
     ////////////////////////////////// SET USERPICTURES
-    baseObject.UserPicture = randomAvatars[currentAvatar];
-    currentAvatar++;
-    if (currentAvatar === 50) { currentAvatar = 0; }  
+    var ranNum = Math.floor(Math.random() * 50);
+    baseObject.UserPicture = randomAvatars[ranNum];
+    // currentAvatar++;
+    // if (currentAvatar === 50) { currentAvatar = 0; }  
     //////////////////////////////////
 
     ////////////////////////////////// SET USERLOCATIONS
@@ -206,19 +217,20 @@ let generateDummyDataQA = () => {
     //////////////////////////////////
 
     ////////////////////////////////// SET QUserPicture
-    baseObject.QUserPicture = randomAvatars[currentAvatar];
-    currentAvatar++;
-    if (currentAvatar === 50) { currentAvatar = 0; } 
+    var ranNum = Math.floor(Math.random() * 50);
+    baseObject.QUserPicture = randomAvatars[ranNum];
+    //currentAvatar++;
+    //if (currentAvatar === 50) { currentAvatar = 0; } 
     //////////////////////////////////
 
-    ////////////////////////////////// SET QUserPicture
+    ////////////////////////////////// SET QUserLocation
     baseObject.QLocation = randomLocations[currentLocation];
     currentLocation++;
     if (currentLocation === 50) { currentLocation = 0; } 
     //////////////////////////////////
 
     ////////////////////////////////// SET QDate
-    baseObject.QLocation = randomReviewDates[currentReviewDate];
+    baseObject.QDate = randomReviewDates[currentReviewDate];
     currentReviewDate++;
     if (currentReviewDate === 50) { currentReviewDate = 0; } 
     //////////////////////////////////
@@ -245,9 +257,10 @@ let generateDummyDataQA = () => {
     //////////////////////////////////
 
     ////////////////////////////////// SET AUserPicture
-    baseObject.AUserPicture = randomAvatars[currentAAvatar];
-    currentAAvatar--;
-    if (currentAAvatar === 0) { currentAAvatar = 50; } 
+    var ranNum = Math.floor(Math.random() * 50);
+    baseObject.AUserPicture = randomAvatars[ranNum];
+    // currentAAvatar--;
+    // if (currentAAvatar === 0) { currentAAvatar = 50; } 
     //////////////////////////////////
     
     ////////////////////////////////// SET ADate
@@ -319,9 +332,10 @@ let generateDummyDataRoomTips = () => {
     //////////////////////////////////
 
     ////////////////////////////////// SET UserPicture
-    baseObject.UserPicture = randomAvatars[currentAvatar];
-    currentAvatar++;
-    if (currentAvatar === 50) { currentAvatar = 0; } 
+    var ranNum = Math.floor(Math.random() * 50);
+    baseObject.UserPicture = randomAvatars[ranNum];
+    // currentAvatar++;
+    // if (currentAvatar === 50) { currentAvatar = 0; } 
     //////////////////////////////////
 
     ////////////////////////////////// SET UserLocation
@@ -421,9 +435,13 @@ let insertToMongo = () => {
 
 let generateAllDataAndInsert = () => {
   console.log('generateAllDataAndInsert()');
-  generateRandomDataArrays();
+  generateRandomDataArrays();// new data
   generateDummyDataReviews();
+  clearArrays();
+  generateRandomDataArrays();// new data
   generateDummyDataQA();
+  clearArrays();
+  generateRandomDataArrays();// new data
   generateDummyDataRoomTips();
   insertToMongo();
   console.log('done');

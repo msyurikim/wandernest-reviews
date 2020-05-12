@@ -4,13 +4,10 @@ import SingleReview from './SingleReview.jsx';
 var ReviewList = (props) => (
 
   <div>
-    <div>
-      <p>ReviewList.jsx</p>
-    </div>
+    {props.data.map((element, i) => (      
+      <div key={i}><SingleReview data={element} /></div>
+    ))}
 
-    <div>
-      <SingleReview />
-    </div>
   </div>
 
 );

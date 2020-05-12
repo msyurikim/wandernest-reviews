@@ -2,15 +2,12 @@ import React from 'react';
 import SingleRoomTip from './SingleRoomTip.jsx';
 
 var RoomTipsList = (props) => (
-
+  
   <div>
-    <div>
-      <p>RoomTipsList.jsx</p>
-    </div>
+    {props.data.map((element, i) => (      
+      <div key={i}><SingleRoomTip data={element} /></div>
+    ))}
 
-    <div>
-      <SingleRoomTip />
-    </div>
   </div>
 
 );

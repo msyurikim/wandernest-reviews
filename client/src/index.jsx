@@ -2,24 +2,77 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 
+import styled from 'styled-components';
+
 import FilterHead from './components/FilterHead.jsx';
 import ReviewList from './components/ReviewList.jsx';
 import QAList from './components/QAList.jsx';
 import RoomTipsList from './components/RoomTipsList.jsx';
 
+// STYLED COMPONENTS 
+const Wrapper = styled.div`
+  display: flex;
+  text-align: center;
+`;
+
+const Block = styled.div`
+  width: 270px;
+  height: 102px;
+  background: white;
+`;
+
+const Background = styled.div`
+  width: 810px;
+  background: #f2f2f2;
+`;
+
+const PageNavigator = styled.div`
+  width: 810px;
+  height: 40px;
+  background: white;
+  margin-top: 20px;
+  margin-bottom: 20px
+  text-align: center;
+`;
+
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {      
+    this.state = {
       currentID: 0,
       reviewData: [],
       qaData: [],
-      roomTipData: [],      
+      roomTipData: [],
+      showReviews: true,
+      showQA: false,
+      showRoomTips: false,
     };
+  }
+  
+  // FUNCTIONALITY
+  toggleDisplay(name) {
+    console.log('toggleDisplay()');
+    
+    switch (name) {
+    case 'reviews':
+      this.setState({ showReviews: true, showQA: false, showRoomTips: false, });
+      break;
+
+    case 'qas':
+      this.setState({ showReviews: false, showQA: true, showRoomTips: false, });
+      break;
+
+    case 'roomtips':
+      this.setState({ showReviews: false, showQA: false, showRoomTips: true, });
+      break;
+
+    default:
+      null;
+    }
   }
 
   componentDidMount() {
-    console.log('componentDidMount()');    
+    console.log('componentDidMount()');
     this.getCurrentURL();
   }
 
@@ -29,7 +82,7 @@ class App extends React.Component {
     var getID = url.searchParams.get('id');
 
     this.setState({currentID: getID}, () => {
-      //console.log(this.state.currentID); 
+      //console.log(this.state.currentID);
       this.getReviewData();
       this.getQAData();
       this.getRoomTipData();
@@ -91,22 +144,28 @@ class App extends React.Component {
 
   }
 
-  render () {
+  render () {    
+
+    const { showReviews, showQA, showRoomTips } = this.state;
+
+    let current;
+
+    if (showReviews) { current = <ReviewList data={this.state.reviewData} />; }
+    if (showQA) { current = <QAList data={this.state.qaData} />; }
+    if (showRoomTips) { current = <RoomTipsList data={this.state.roomTipData} />; }
 
     return (
-      <div>
-        <div>
-          <p>App - index.jsx</p>
-        </div>
+      <Background>
+        <Wrapper>      
 
-        <div>
-          <FilterHead />
-          <ReviewList />
-          <RoomTipsList />
-          <QAList />
-          
-        </div>
-      </div>
+          <div>
+            <FilterHead toggleDisplay={this.toggleDisplay.bind(this)} />
+            {current}
+          </div>
+
+        </Wrapper>
+        <PageNavigator>1 | 2 | 3</PageNavigator>
+      </Background>
     );
     
   }

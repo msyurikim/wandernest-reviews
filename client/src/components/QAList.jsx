@@ -4,13 +4,10 @@ import SingleQA from './SingleQA.jsx';
 var QAList = (props) => (
 
   <div>
-    <div>
-      <p>QAList.jsx</p>
-    </div>
+    {props.data.map((element, i) => (      
+      <div key={i}><SingleQA data={element} /></div>
+    ))}
 
-    <div>
-      <SingleQA />
-    </div>
   </div>
 
 );
