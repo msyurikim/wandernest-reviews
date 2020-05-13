@@ -11,8 +11,8 @@ import RoomTipsList from './components/RoomTipsList.jsx';
 
 // STYLED COMPONENTS 
 const Wrapper = styled.div`
+  font-family: 'Trip Sans', Arial, sans-serif !important;
   display: flex;
-  text-align: center;
 `;
 
 const Block = styled.div`
@@ -159,12 +159,12 @@ class App extends React.Component {
         <Wrapper>      
 
           <div>
-            <FilterHead toggleDisplay={this.toggleDisplay.bind(this)} />
+            <FilterHead toggleDisplay={this.toggleDisplay.bind(this)} showReviews={this.state.showReviews} showQA={this.state.showQA} showRoomTips={this.state.showRoomTips} />
             {current}
           </div>
 
         </Wrapper>
-        <PageNavigator>1 | 2 | 3</PageNavigator>
+        <PageNavigator></PageNavigator>
       </Background>
     );
     
