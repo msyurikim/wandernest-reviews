@@ -43,7 +43,7 @@ class App extends React.Component {
       reviewData: [],
       qaData: [],
       roomTipData: [],
-      showReviews: false,
+      showReviews: true,
       showQA: false,
       showRoomTips: false,
     };
